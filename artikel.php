@@ -1,3 +1,11 @@
+<form name="formcari" method="post" action="index.php?webpro=formcari">
+			<div>
+				<tr> <td>  Search </td>
+				<td> <input type="text" name="name"> </td>
+				</tr>
+				<td></td>
+				<td> <input type="SUBMIT" name="SUBMIT" id="SUBMIT" value="search" > </td>
+			</div>
 <?php
 include "koneksi.php";
 $has = mysql_query("select * from artikel order by tgl_artikel desc");

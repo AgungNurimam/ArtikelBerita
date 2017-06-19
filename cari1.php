@@ -1,15 +1,6 @@
-<form name="formcari" method="post" action="index.php?webpro=formcari2">
-			<div>
-				<tr> <td>  Search </td>
-				<td> <input type="text" name="name"> </td>
-				</tr>
-				<td></td>
-				<td> <input type="SUBMIT" name="SUBMIT" id="SUBMIT" value="search" > </td>
-			</div>
 <article class="content">
 	<table border="1">
 		<tr>
-			<th>Id</th>
 			<th>Judul</th>
 			<th>Isi</th>
 			<th>Penulis</th>
@@ -17,14 +8,15 @@
 			<th>Aksi</th>
 		</tr>
 		<?php
-			$select = mysql_query("SELECT * FROM artikel")or die(mysql_error());
-			$rows = mysql_num_rows($select);
-			$no = 1;
-			if($rows>0) {
-			while ($data = mysql_fetch_array($select)) {
+			include "koneksi.php";
+			$name= $_POST['name'];
+			$q = "SELECT * from artikel where judul_artikel like $name "; 
+			$rows = mysql_num_rows($q);
+			if($rows>0) 
+			$result = mysql_query($q);{
+			while ($data = mysql_fetch_array($result)) {
 			?>
 			<tr>
-				<td><?php echo $no++; ?></td>
 				<td><?php echo $data['judul_artikel'];?></td>
 				<td><?php echo $data['isi_artikel'];?></td>
 				<td><?php echo $data['penulis_artikel'];?></td>
