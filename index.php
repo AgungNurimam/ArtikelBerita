@@ -3,7 +3,7 @@
 		include 'koneksi.php';
 		error_reporting(0);
 		if (isset($_SESSION['user']) && isset($_SESSION['login'])) {
-			$cekuser="SELECT * FROM user WHERE username='".$_SESSION['user']."'";
+			$cekuser="SELECT * FROM admin WHERE username='".$_SESSION['user']."'";
 			$q_cekuser=mysql_query($cekuser)or die(mysql_error());
 			if (mysql_num_rows($q_cekuser)>0) {
 		}
@@ -35,7 +35,6 @@
 					
 				</ul>
 			</nav>
-
 			<div id="content-wrapper">
 				<section id="content">
 					<?php
@@ -63,6 +62,12 @@
 							case 'update':
 								include"update.php";
 								break;
+							case 'formcari':
+								include"cari.php";
+								break;
+							case 'formcari2':
+								include"cari1.php";
+								break;
 							default:
 								include "artikel.php";
 								break;
@@ -71,11 +76,18 @@
 					?>
 				</section>
 
+				<aside id="sidebar" align="center">
+					<section class="sidebar-content">
+						<h1 class="titlesidebar">Artikel Terfavorit</h1>
+						<h1 class="isi"> </h1>
+					</section>
+				</aside>
+
 				<br	class="floating">
 			</div>
 
 			<footer id="footer">
-				<p class="footer-text">Copyright &copy WebPro</p>
+				<p class="footer-text">Copyright &copy Ilkom GH</p>
 			</footer>
 		</div>
 	</body>
