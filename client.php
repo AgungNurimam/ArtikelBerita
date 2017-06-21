@@ -59,22 +59,10 @@
 					?>
 				</section>
 
-				<aside id="sidebar">
+				<aside id="sidebar" align="left">
 					<section class="sidebar-content">
-						<h1 class="tittlesidebar">Klasemen</h1>
-						<table>
-						<th style="float=left">
-							<td>Nama Tim</td>
-							<td>M</td>
-							<td>S</td>
-							<td>K</td>
-							<td>Point</td>
-						</th>
-						<tr>
-							<td>Persib</td>
-						</table>
-	
-					
+						<h1 class="titlesidebar">Artikel Terfavorit</h1>
+						<?php echo popularPosts(); ?>
 					</section>
 				</aside>
 				<br	class="floating">
@@ -86,3 +74,23 @@
 		</div>
 	</body>
 </html>
+
+<?php
+function popularPosts(){
+include "koneksi.php";
+$has = mysql_query("SELECT * FROM artikel WHERE tgl_artikel > DATE_SUB(curdate(),INTERVAL 1 WEEK) ORDER BY count DESC LIMIT 5");
+$num = mysql_num_rows($has);
+
+if($num<1){
+	echo'<center>Tidak Ada Artikel</center>';
+}else{
+while($data=mysql_fetch_array($has)){
+	$art = substr($data['isi_artikel'],0,100);
+	 echo '
+					<a href="popularPosts.php?p='.$data['id_artikel'].'?>"> <img width="50" height="50" src="photo-artikel/'.$data['photo_artikel'].'"> </a>
+					<a href="popularPosts.php?p='.$data['id_artikel'].'?>"> <h5>'.$data['judul_artikel'].'</h5> </a>
+		 ';}
+}
+}
+?>
+

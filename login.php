@@ -14,7 +14,7 @@
 		if (isset($_POST['submit'])) {
 			$username=$_POST['username'];
 			$password=$_POST['password'];
-			$cekuser="SELECT * FROM admin WHERE username='$username' AND password='$password'";
+			$cekuser="SELECT * FROM user WHERE username='$username' AND password='$password'";
 			$q_cekuser=mysql_query($cekuser)or die(mysql_error());
 
 			//Ketika username ditemukan

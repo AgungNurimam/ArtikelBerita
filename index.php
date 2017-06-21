@@ -3,7 +3,7 @@
 		include 'koneksi.php';
 		error_reporting(0);
 		if (isset($_SESSION['user']) && isset($_SESSION['login'])) {
-			$cekuser="SELECT * FROM admin WHERE username='".$_SESSION['user']."'";
+			$cekuser="SELECT * FROM user WHERE username='".$_SESSION['user']."'";
 			$q_cekuser=mysql_query($cekuser)or die(mysql_error());
 			if (mysql_num_rows($q_cekuser)>0) {
 		}
@@ -59,6 +59,9 @@
 							case 'delete':
 								include"delete.php";
 								break;
+							case 'populer':
+								include"popularPosts.php";
+								break;
 							case 'update':
 								include"update.php";
 								break;
@@ -76,10 +79,10 @@
 					?>
 				</section>
 
-				<aside id="sidebar" align="center">
+				<aside id="sidebar" align="left">
 					<section class="sidebar-content">
 						<h1 class="titlesidebar">Artikel Terfavorit</h1>
-						<h1 class="isi"> </h1>
+						<?php echo popularPosts(); ?>
 					</section>
 				</aside>
 
@@ -93,6 +96,7 @@
 	</body>
 </html>
 
+
 <?php
 	}
 	else{
@@ -101,3 +105,25 @@
 		echo "<p>Silahkan login jika anda adalah admin. Klik <a href='login.php'>disini</a></p>";
 	}
 ?>
+
+
+
+<?php
+function popularPosts(){
+include "koneksi.php";
+$has = mysql_query("SELECT * FROM artikel WHERE tgl_artikel > DATE_SUB(curdate(),INTERVAL 1 WEEK) ORDER BY count DESC LIMIT 5");
+$num = mysql_num_rows($has);
+
+if($num<1){
+	echo'<center>Tidak Ada Artikel</center>';
+}else{
+while($data=mysql_fetch_array($has)){
+	$art = substr($data['isi_artikel'],0,100);
+	 echo '
+					<a href="popularPosts.php?p='.$data['id_artikel'].'?>"> <img width="50" height="50" src="photo-artikel/'.$data['photo_artikel'].'"> </a>
+					<a href="popularPosts.php?p='.$data['id_artikel'].'?>"> <h5>'.$data['judul_artikel'].'</h5> </a>
+		 ';}
+}
+}
+?>
+
